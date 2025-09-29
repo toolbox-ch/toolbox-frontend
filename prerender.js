@@ -122,6 +122,9 @@ function getRouteFromFile(filePath) {
 function generatePageHTML(route, seoData) {
   const { title, description, h1 } = seoData;
   
+  // Generate the actual page content based on the route
+  let pageContent = generatePageContent(route, seoData);
+  
   return `<!doctype html>
 <html lang="en">
   <head>
@@ -146,49 +149,220 @@ function generatePageHTML(route, seoData) {
   </head>
 
   <body>
-    <div id="root">
-      <div class="min-h-screen flex flex-col">
-        <div class="bg-card border-b sticky top-0 z-50 backdrop-blur-sm bg-card/95">
-          <div class="container mx-auto px-4 py-4">
-            <div class="flex items-center justify-between gap-4">
-              <div class="text-xl font-bold text-primary cursor-pointer hover:text-primary-hover transition-colors">
-                Toolbox24
-              </div>
+    <div id="root">${pageContent}</div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>`;
+}
+
+function generatePageContent(route, seoData) {
+  const { h1, description } = seoData;
+  
+  // Generate different content based on the route type
+  if (route === '/') {
+    return generateHomePageContent();
+  } else if (route.startsWith('/pdf-tools/')) {
+    return generateToolPageContent(route, h1, description, 'PDF');
+  } else if (route.startsWith('/datei-tools/')) {
+    return generateToolPageContent(route, h1, description, 'Datei');
+  } else if (route.startsWith('/bild/')) {
+    return generateToolPageContent(route, h1, description, 'Bild');
+  } else {
+    return generateGenericPageContent(h1, description);
+  }
+}
+
+function generateHomePageContent() {
+  return `
+    <div class="min-h-screen flex flex-col">
+      <div class="bg-card border-b sticky top-0 z-50 backdrop-blur-sm bg-card/95">
+        <div class="container mx-auto px-4 py-4">
+          <div class="flex items-center justify-between gap-4">
+            <div class="text-xl font-bold text-primary cursor-pointer hover:text-primary-hover transition-colors">
+              Toolbox24
             </div>
           </div>
         </div>
-        <main class="flex-1">
-          <div class="min-h-screen py-16">
-            <div class="container mx-auto px-4">
-              <div class="max-w-4xl mx-auto text-center">
+      </div>
+      <main class="flex-1">
+        <div class="min-h-screen">
+          <!-- Hero Section -->
+          <section class="py-16 md:py-24">
+            <div class="container mx-auto px-4 text-center">
+              <div class="max-w-3xl mx-auto">
                 <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-6">
-                  ${h1}
+                  Toolbox24
                 </h1>
-                <p class="text-xl text-muted-foreground mb-8">
-                  ${description}
+                <p class="text-xl md:text-2xl text-muted-foreground mb-8">
+                  Kostenlose Online-Tools für PDFs, Bilder und Vorlagen
                 </p>
-                <div class="bg-card border rounded-lg p-8">
-                  <div class="text-center">
-                    <div class="bg-primary/10 w-16 h-16 rounded-lg flex items-center justify-center mx-auto mb-4">
-                      <svg class="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 py-6 text-lg">
+                  Alle Tools entdecken
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Popular Tools Section -->
+          <section class="py-16 bg-muted/30">
+            <div class="container mx-auto px-4">
+              <div class="text-center mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4">Beliebte Tools</h2>
+                <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
+                  Unsere meistgenutzten Online-Tools für den täglichen Bedarf
+                </p>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <div class="text-center border-0 shadow-sm hover:shadow-md transition-shadow h-full flex flex-col hover:border-primary/20 bg-card rounded-lg border p-6">
+                  <div class="pb-3 flex-1">
+                    <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-3">
+                      <svg class="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
                       </svg>
                     </div>
-                    <h2 class="text-2xl font-semibold mb-4">Tool wird geladen...</h2>
-                    <p class="text-muted-foreground">
-                      Das Tool wird automatisch geladen. Bitte warten Sie einen Moment.
+                    <h3 class="text-xl font-semibold mb-3">PDF zusammenfügen</h3>
+                    <p class="text-muted-foreground leading-relaxed">
+                      Mehrere PDFs zu einem Dokument vereinen
                     </p>
+                  </div>
+                  <div class="pt-0">
+                    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3 w-full hover:bg-blue-500 hover:text-white hover:border-blue-500">
+                      Jetzt nutzen
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="text-center border-0 shadow-sm hover:shadow-md transition-shadow h-full flex flex-col hover:border-primary/20 bg-card rounded-lg border p-6">
+                  <div class="pb-3 flex-1">
+                    <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-3">
+                      <svg class="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                      </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Hintergrund entfernen</h3>
+                    <p class="text-muted-foreground leading-relaxed">
+                      KI-basierte Hintergrundentfernung für Bilder
+                    </p>
+                  </div>
+                  <div class="pt-0">
+                    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3 w-full hover:bg-blue-500 hover:text-white hover:border-blue-500">
+                      Jetzt nutzen
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="text-center border-0 shadow-sm hover:shadow-md transition-shadow h-full flex flex-col hover:border-primary/20 bg-card rounded-lg border p-6">
+                  <div class="pb-3 flex-1">
+                    <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-3">
+                      <svg class="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                      </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Kündigungsvorlage</h3>
+                    <p class="text-muted-foreground leading-relaxed">
+                      Rechtssichere Vorlagen für alle Kündigungen
+                    </p>
+                  </div>
+                  <div class="pt-0">
+                    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3 w-full hover:bg-blue-500 hover:text-white hover:border-blue-500">
+                      Jetzt nutzen
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </main>
-      </div>
+          </section>
+        </div>
+      </main>
     </div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>`;
+  `;
+}
+
+function generateToolPageContent(route, h1, description, toolType) {
+  return `
+    <div class="min-h-screen flex flex-col">
+      <div class="bg-card border-b sticky top-0 z-50 backdrop-blur-sm bg-card/95">
+        <div class="container mx-auto px-4 py-4">
+          <div class="flex items-center justify-between gap-4">
+            <div class="text-xl font-bold text-primary cursor-pointer hover:text-primary-hover transition-colors">
+              Toolbox24
+            </div>
+          </div>
+        </div>
+      </div>
+      <main class="flex-1">
+        <div class="min-h-screen py-16">
+          <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+              <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-6">
+                ${h1}
+              </h1>
+              <p class="text-xl text-muted-foreground mb-8">
+                ${description}
+              </p>
+              <div class="bg-card border rounded-lg p-8">
+                <div class="text-center">
+                  <div class="bg-primary/10 w-16 h-16 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <svg class="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                  </div>
+                  <h2 class="text-2xl font-semibold mb-4">${toolType} Tool wird geladen...</h2>
+                  <p class="text-muted-foreground">
+                    Das ${toolType.toLowerCase()}-Tool wird automatisch geladen. Bitte warten Sie einen Moment.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  `;
+}
+
+function generateGenericPageContent(h1, description) {
+  return `
+    <div class="min-h-screen flex flex-col">
+      <div class="bg-card border-b sticky top-0 z-50 backdrop-blur-sm bg-card/95">
+        <div class="container mx-auto px-4 py-4">
+          <div class="flex items-center justify-between gap-4">
+            <div class="text-xl font-bold text-primary cursor-pointer hover:text-primary-hover transition-colors">
+              Toolbox24
+            </div>
+          </div>
+        </div>
+      </div>
+      <main class="flex-1">
+        <div class="min-h-screen py-16">
+          <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+              <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-6">
+                ${h1}
+              </h1>
+              <p class="text-xl text-muted-foreground mb-8">
+                ${description}
+              </p>
+              <div class="bg-card border rounded-lg p-8">
+                <div class="text-center">
+                  <div class="bg-primary/10 w-16 h-16 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <svg class="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                  </div>
+                  <h2 class="text-2xl font-semibold mb-4">Inhalt wird geladen...</h2>
+                  <p class="text-muted-foreground">
+                    Die Seite wird automatisch geladen. Bitte warten Sie einen Moment.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  `;
 }
 
 function getAllPages(dir) {
