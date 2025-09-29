@@ -5,7 +5,7 @@ import App from "./App";
 
 export function render(url: string) {
   const helmetContext: { helmet?: any } = {};
-  const html = renderToString(
+  const appHtml = renderToString(
     <HelmetProvider context={helmetContext}>
       <StaticRouter location={url}>
         <App />
@@ -13,5 +13,6 @@ export function render(url: string) {
     </HelmetProvider>
   );
   const { helmet } = helmetContext;
-  return { html, helmet };
+  const headTags = helmet ? helmet.title.toString() + helmet.meta.toString() : '';
+  return { appHtml, headTags };
 }
