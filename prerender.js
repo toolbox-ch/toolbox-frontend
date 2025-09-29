@@ -122,8 +122,8 @@ function getRouteFromFile(filePath) {
 function generatePageHTML(route, seoData) {
   const { title, description, h1 } = seoData;
   
-  // Generate the actual page content based on the route
-  const pageContent = generateStaticPageContent(route, seoData);
+  // Generate comprehensive static content that matches the actual React components
+  const pageContent = generateComprehensivePageContent(route, seoData);
   
   return `<!doctype html>
 <html lang="en">
@@ -155,23 +155,27 @@ function generatePageHTML(route, seoData) {
 </html>`;
 }
 
-function generateStaticPageContent(route, seoData) {
+function generateComprehensivePageContent(route, seoData) {
   const { h1, description } = seoData;
   
   if (route === '/') {
-    return generateHomePageContent();
+    return generateFullHomePageContent();
   } else if (route.startsWith('/pdf-tools/')) {
-    return generateToolPageContent(route, h1, description, 'PDF');
+    return generateFullToolPageContent(route, h1, description, 'PDF');
   } else if (route.startsWith('/datei-tools/')) {
-    return generateToolPageContent(route, h1, description, 'Datei');
+    return generateFullToolPageContent(route, h1, description, 'Datei');
   } else if (route.startsWith('/bild/')) {
-    return generateToolPageContent(route, h1, description, 'Bild');
+    return generateFullToolPageContent(route, h1, description, 'Bild');
+  } else if (route === '/alle-tools') {
+    return generateFullAlleToolsContent();
+  } else if (route === '/alle-vorlagen') {
+    return generateFullAllTemplatesContent();
   } else {
-    return generateGenericPageContent(h1, description);
+    return generateFullGenericPageContent(h1, description);
   }
 }
 
-function generateHomePageContent() {
+function generateFullHomePageContent() {
   return `
     <div class="min-h-screen flex flex-col">
       <div class="bg-card border-b sticky top-0 z-50 backdrop-blur-sm bg-card/95">
@@ -180,6 +184,12 @@ function generateHomePageContent() {
             <div class="text-xl font-bold text-primary cursor-pointer hover:text-primary-hover transition-colors">
               Toolbox24
             </div>
+            <nav class="hidden md:flex items-center space-x-6">
+              <a href="/alle-tools" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Alle Tools</a>
+              <a href="/alle-vorlagen" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Vorlagen</a>
+              <a href="/blog" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Blog</a>
+              <a href="/kontakt" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Kontakt</a>
+            </nav>
           </div>
         </div>
       </div>
@@ -194,6 +204,9 @@ function generateHomePageContent() {
                 </h1>
                 <p class="text-xl md:text-2xl text-muted-foreground mb-8">
                   Kostenlose Online-Tools für PDFs, Bilder und Vorlagen
+                </p>
+                <p class="text-lg text-muted-foreground mb-8">
+                  Professionelle Tools für den täglichen Bedarf - direkt im Browser, ohne Anmeldung, vollständig kostenlos.
                 </p>
                 <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 py-6 text-lg">
                   Alle Tools entdecken
@@ -222,7 +235,7 @@ function generateHomePageContent() {
                     </div>
                     <h3 class="text-xl font-semibold mb-3">PDF zusammenfügen</h3>
                     <p class="text-muted-foreground leading-relaxed">
-                      Mehrere PDFs zu einem Dokument vereinen
+                      Mehrere PDFs zu einem Dokument vereinen. Schnell, sicher und kostenlos.
                     </p>
                   </div>
                   <div class="pt-0">
@@ -241,7 +254,7 @@ function generateHomePageContent() {
                     </div>
                     <h3 class="text-xl font-semibold mb-3">Hintergrund entfernen</h3>
                     <p class="text-muted-foreground leading-relaxed">
-                      KI-basierte Hintergrundentfernung für Bilder
+                      KI-basierte Hintergrundentfernung für Bilder. Automatisch und präzise.
                     </p>
                   </div>
                   <div class="pt-0">
@@ -260,7 +273,7 @@ function generateHomePageContent() {
                     </div>
                     <h3 class="text-xl font-semibold mb-3">Kündigungsvorlage</h3>
                     <p class="text-muted-foreground leading-relaxed">
-                      Rechtssichere Vorlagen für alle Kündigungen
+                      Rechtssichere Vorlagen für alle Kündigungen. Professionell und aktuell.
                     </p>
                   </div>
                   <div class="pt-0">
@@ -272,13 +285,74 @@ function generateHomePageContent() {
               </div>
             </div>
           </section>
+
+          <!-- Categories Section -->
+          <section class="py-16">
+            <div class="container mx-auto px-4">
+              <div class="text-center mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4">Kategorien</h2>
+                <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
+                  Entdecken Sie unsere Tools nach Kategorien
+                </p>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <div class="text-center p-6 bg-card rounded-lg border">
+                  <div class="bg-primary/10 w-16 h-16 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <svg class="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                  </div>
+                  <h3 class="text-xl font-semibold mb-2">PDF Tools</h3>
+                  <p class="text-muted-foreground mb-4">PDFs bearbeiten, zusammenfügen, teilen und konvertieren</p>
+                  <a href="/pdf-tools/alle" class="text-primary hover:text-primary/80 font-medium">Alle PDF Tools →</a>
+                </div>
+                
+                <div class="text-center p-6 bg-card rounded-lg border">
+                  <div class="bg-primary/10 w-16 h-16 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <svg class="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                  </div>
+                  <h3 class="text-xl font-semibold mb-2">Bild Tools</h3>
+                  <p class="text-muted-foreground mb-4">Bilder komprimieren, konvertieren und bearbeiten</p>
+                  <a href="/datei-tools/alle" class="text-primary hover:text-primary/80 font-medium">Alle Bild Tools →</a>
+                </div>
+                
+                <div class="text-center p-6 bg-card rounded-lg border">
+                  <div class="bg-primary/10 w-16 h-16 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <svg class="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                  </div>
+                  <h3 class="text-xl font-semibold mb-2">Vorlagen</h3>
+                  <p class="text-muted-foreground mb-4">Professionelle Vorlagen für alle Lebenslagen</p>
+                  <a href="/alle-vorlagen" class="text-primary hover:text-primary/80 font-medium">Alle Vorlagen →</a>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </main>
+      
+      <footer class="bg-muted/30 border-t">
+        <div class="container mx-auto px-4 py-8">
+          <div class="text-center">
+            <div class="text-xl font-bold text-primary mb-4">Toolbox24</div>
+            <p class="text-muted-foreground mb-4">Kostenlose Online-Tools für PDF, Bilder und Vorlagen</p>
+            <div class="flex justify-center space-x-6">
+              <a href="/impressum" class="text-sm text-muted-foreground hover:text-foreground">Impressum</a>
+              <a href="/rechtliches" class="text-sm text-muted-foreground hover:text-foreground">Rechtliches</a>
+              <a href="/kontakt" class="text-sm text-muted-foreground hover:text-foreground">Kontakt</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   `;
 }
 
-function generateToolPageContent(route, h1, description, toolType) {
+function generateFullToolPageContent(route, h1, description, toolType) {
   return `
     <div class="min-h-screen flex flex-col">
       <div class="bg-card border-b sticky top-0 z-50 backdrop-blur-sm bg-card/95">
@@ -287,6 +361,12 @@ function generateToolPageContent(route, h1, description, toolType) {
             <div class="text-xl font-bold text-primary cursor-pointer hover:text-primary-hover transition-colors">
               Toolbox24
             </div>
+            <nav class="hidden md:flex items-center space-x-6">
+              <a href="/alle-tools" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Alle Tools</a>
+              <a href="/alle-vorlagen" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Vorlagen</a>
+              <a href="/blog" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Blog</a>
+              <a href="/kontakt" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Kontakt</a>
+            </nav>
           </div>
         </div>
       </div>
@@ -300,7 +380,7 @@ function generateToolPageContent(route, h1, description, toolType) {
               <p class="text-xl text-muted-foreground mb-8">
                 ${description}
               </p>
-              <div class="bg-card border rounded-lg p-8">
+              <div class="bg-card border rounded-lg p-8 mb-8">
                 <div class="text-center">
                   <div class="bg-primary/10 w-16 h-16 rounded-lg flex items-center justify-center mx-auto mb-4">
                     <svg class="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -313,15 +393,40 @@ function generateToolPageContent(route, h1, description, toolType) {
                   </p>
                 </div>
               </div>
+              
+              <div class="text-left max-w-2xl mx-auto">
+                <h3 class="text-xl font-semibold mb-4">Funktionen</h3>
+                <ul class="space-y-2 text-muted-foreground">
+                  <li>• Kostenlose Nutzung ohne Anmeldung</li>
+                  <li>• Sichere Verarbeitung direkt im Browser</li>
+                  <li>• Keine Datenübertragung an Server</li>
+                  <li>• Unterstützt alle gängigen Formate</li>
+                  <li>• Sofortige Ergebnisse</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </main>
+      
+      <footer class="bg-muted/30 border-t">
+        <div class="container mx-auto px-4 py-8">
+          <div class="text-center">
+            <div class="text-xl font-bold text-primary mb-4">Toolbox24</div>
+            <p class="text-muted-foreground mb-4">Kostenlose Online-Tools für PDF, Bilder und Vorlagen</p>
+            <div class="flex justify-center space-x-6">
+              <a href="/impressum" class="text-sm text-muted-foreground hover:text-foreground">Impressum</a>
+              <a href="/rechtliches" class="text-sm text-muted-foreground hover:text-foreground">Rechtliches</a>
+              <a href="/kontakt" class="text-sm text-muted-foreground hover:text-foreground">Kontakt</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   `;
 }
 
-function generateGenericPageContent(h1, description) {
+function generateFullAlleToolsContent() {
   return `
     <div class="min-h-screen flex flex-col">
       <div class="bg-card border-b sticky top-0 z-50 backdrop-blur-sm bg-card/95">
@@ -330,6 +435,152 @@ function generateGenericPageContent(h1, description) {
             <div class="text-xl font-bold text-primary cursor-pointer hover:text-primary-hover transition-colors">
               Toolbox24
             </div>
+            <nav class="hidden md:flex items-center space-x-6">
+              <a href="/alle-tools" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Alle Tools</a>
+              <a href="/alle-vorlagen" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Vorlagen</a>
+              <a href="/blog" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Blog</a>
+              <a href="/kontakt" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Kontakt</a>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <main class="flex-1">
+        <div class="min-h-screen py-16">
+          <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+              <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-6 text-center">
+                Alle Tools
+              </h1>
+              <p class="text-xl text-muted-foreground mb-12 text-center">
+                Entdecken Sie alle kostenlosen Online-Tools von Toolbox24
+              </p>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-card rounded-lg border p-6">
+                  <h3 class="text-lg font-semibold mb-2">PDF Tools</h3>
+                  <p class="text-muted-foreground mb-4">PDFs bearbeiten, zusammenfügen, teilen und konvertieren</p>
+                  <a href="/pdf-tools/alle" class="text-primary hover:text-primary/80 font-medium">Alle PDF Tools →</a>
+                </div>
+                
+                <div class="bg-card rounded-lg border p-6">
+                  <h3 class="text-lg font-semibold mb-2">Bild Tools</h3>
+                  <p class="text-muted-foreground mb-4">Bilder komprimieren, konvertieren und bearbeiten</p>
+                  <a href="/datei-tools/alle" class="text-primary hover:text-primary/80 font-medium">Alle Bild Tools →</a>
+                </div>
+                
+                <div class="bg-card rounded-lg border p-6">
+                  <h3 class="text-lg font-semibold mb-2">Vorlagen</h3>
+                  <p class="text-muted-foreground mb-4">Professionelle Vorlagen für alle Lebenslagen</p>
+                  <a href="/alle-vorlagen" class="text-primary hover:text-primary/80 font-medium">Alle Vorlagen →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      
+      <footer class="bg-muted/30 border-t">
+        <div class="container mx-auto px-4 py-8">
+          <div class="text-center">
+            <div class="text-xl font-bold text-primary mb-4">Toolbox24</div>
+            <p class="text-muted-foreground mb-4">Kostenlose Online-Tools für PDF, Bilder und Vorlagen</p>
+            <div class="flex justify-center space-x-6">
+              <a href="/impressum" class="text-sm text-muted-foreground hover:text-foreground">Impressum</a>
+              <a href="/rechtliches" class="text-sm text-muted-foreground hover:text-foreground">Rechtliches</a>
+              <a href="/kontakt" class="text-sm text-muted-foreground hover:text-foreground">Kontakt</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  `;
+}
+
+function generateFullAllTemplatesContent() {
+  return `
+    <div class="min-h-screen flex flex-col">
+      <div class="bg-card border-b sticky top-0 z-50 backdrop-blur-sm bg-card/95">
+        <div class="container mx-auto px-4 py-4">
+          <div class="flex items-center justify-between gap-4">
+            <div class="text-xl font-bold text-primary cursor-pointer hover:text-primary-hover transition-colors">
+              Toolbox24
+            </div>
+            <nav class="hidden md:flex items-center space-x-6">
+              <a href="/alle-tools" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Alle Tools</a>
+              <a href="/alle-vorlagen" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Vorlagen</a>
+              <a href="/blog" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Blog</a>
+              <a href="/kontakt" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Kontakt</a>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <main class="flex-1">
+        <div class="min-h-screen py-16">
+          <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+              <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-6 text-center">
+                Alle Vorlagen
+              </h1>
+              <p class="text-xl text-muted-foreground mb-12 text-center">
+                Professionelle Vorlagen für alle Lebenslagen
+              </p>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-card rounded-lg border p-6">
+                  <h3 class="text-lg font-semibold mb-2">Kündigungsvorlagen</h3>
+                  <p class="text-muted-foreground mb-4">Rechtssichere Vorlagen für alle Kündigungen</p>
+                  <a href="/vorlage/kuendigung" class="text-primary hover:text-primary/80 font-medium">Vorlagen ansehen →</a>
+                </div>
+                
+                <div class="bg-card rounded-lg border p-6">
+                  <h3 class="text-lg font-semibold mb-2">Bewerbungsvorlagen</h3>
+                  <p class="text-muted-foreground mb-4">Professionelle Bewerbungsunterlagen</p>
+                  <a href="/vorlage/bewerbung" class="text-primary hover:text-primary/80 font-medium">Vorlagen ansehen →</a>
+                </div>
+                
+                <div class="bg-card rounded-lg border p-6">
+                  <h3 class="text-lg font-semibold mb-2">Vertragsvorlagen</h3>
+                  <p class="text-muted-foreground mb-4">Rechtssichere Verträge und Vereinbarungen</p>
+                  <a href="/vorlage/vertrag" class="text-primary hover:text-primary/80 font-medium">Vorlagen ansehen →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      
+      <footer class="bg-muted/30 border-t">
+        <div class="container mx-auto px-4 py-8">
+          <div class="text-center">
+            <div class="text-xl font-bold text-primary mb-4">Toolbox24</div>
+            <p class="text-muted-foreground mb-4">Kostenlose Online-Tools für PDF, Bilder und Vorlagen</p>
+            <div class="flex justify-center space-x-6">
+              <a href="/impressum" class="text-sm text-muted-foreground hover:text-foreground">Impressum</a>
+              <a href="/rechtliches" class="text-sm text-muted-foreground hover:text-foreground">Rechtliches</a>
+              <a href="/kontakt" class="text-sm text-muted-foreground hover:text-foreground">Kontakt</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  `;
+}
+
+function generateFullGenericPageContent(h1, description) {
+  return `
+    <div class="min-h-screen flex flex-col">
+      <div class="bg-card border-b sticky top-0 z-50 backdrop-blur-sm bg-card/95">
+        <div class="container mx-auto px-4 py-4">
+          <div class="flex items-center justify-between gap-4">
+            <div class="text-xl font-bold text-primary cursor-pointer hover:text-primary-hover transition-colors">
+              Toolbox24
+            </div>
+            <nav class="hidden md:flex items-center space-x-6">
+              <a href="/alle-tools" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Alle Tools</a>
+              <a href="/alle-vorlagen" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Vorlagen</a>
+              <a href="/blog" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Blog</a>
+              <a href="/kontakt" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Kontakt</a>
+            </nav>
           </div>
         </div>
       </div>
@@ -360,9 +611,24 @@ function generateGenericPageContent(h1, description) {
           </div>
         </div>
       </main>
+      
+      <footer class="bg-muted/30 border-t">
+        <div class="container mx-auto px-4 py-8">
+          <div class="text-center">
+            <div class="text-xl font-bold text-primary mb-4">Toolbox24</div>
+            <p class="text-muted-foreground mb-4">Kostenlose Online-Tools für PDF, Bilder und Vorlagen</p>
+            <div class="flex justify-center space-x-6">
+              <a href="/impressum" class="text-sm text-muted-foreground hover:text-foreground">Impressum</a>
+              <a href="/rechtliches" class="text-sm text-muted-foreground hover:text-foreground">Rechtliches</a>
+              <a href="/kontakt" class="text-sm text-muted-foreground hover:text-foreground">Kontakt</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   `;
 }
+
 
 
 function getAllPages(dir) {
@@ -406,7 +672,7 @@ async function prerender() {
       try {
         const seoData = seoConfig[route];
         
-        // Generate HTML for this page using static content
+        // Generate HTML for this page using comprehensive static content
         const html = generatePageHTML(route, seoData);
         
         // Determine output path - use folder structure with index.html
