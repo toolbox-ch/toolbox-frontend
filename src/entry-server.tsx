@@ -1,18 +1,23 @@
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
-import { HelmetProvider } from "react-helmet-async";
 import App from "./App";
 
 export function render(url: string) {
-  const helmetContext: { helmet?: any } = {};
-  const appHtml = renderToString(
-    <HelmetProvider context={helmetContext}>
+  try {
+    // Render the React app with StaticRouter for the specific route
+    const appHtml = renderToString(
       <StaticRouter location={url}>
         <App />
       </StaticRouter>
-    </HelmetProvider>
-  );
-  const { helmet } = helmetContext;
-  const headTags = helmet ? helmet.title.toString() + helmet.meta.toString() : '';
-  return { appHtml, headTags };
+    );
+    
+    return { appHtml, headTags: '' };
+  } catch (error) {
+    console.error('SSR Error:', error);
+    // Return a basic HTML structure if SSR fails
+    return { 
+      appHtml: `<div class="min-h-screen flex items-center justify-center"><h1>Loading...</h1></div>`, 
+      headTags: '' 
+    };
+  }
 }
