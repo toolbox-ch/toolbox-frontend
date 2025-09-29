@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Download, ImageIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
-import { Helmet } from 'react-helmet-async';
 
 const GifCompress = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -131,10 +130,6 @@ const GifCompress = () => {
 
   return (
     <>
-      <Helmet>
-        <title>GIF komprimieren online – kostenlos & sicher | Toolbox24</title>
-        <meta name="description" content="GIF-Dateien kostenlos online komprimieren. Reduzieren Sie die Dateigröße Ihrer GIF-Animationen schnell und sicher in Ihrem Browser." />
-      </Helmet>
       
       <div className="min-h-screen py-8">
         <div className="container mx-auto px-4 max-w-4xl">

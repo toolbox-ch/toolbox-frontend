@@ -1,4 +1,3 @@
-import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -19,11 +18,6 @@ const Blog = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Blog - Toolbox24</title>
-        <meta name="description" content="Tipps, Tutorials und Neuigkeiten rund um PDF-Tools, Bildbearbeitung und digitale Workflows von Toolbox24." />
-        <meta name="keywords" content="PDF Tutorial, Bildbearbeitung Tipps, Freistellen, Komprimierung, Blog" />
-      </Helmet>
 
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">

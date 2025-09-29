@@ -5,7 +5,6 @@ import { FileUpload } from "@/components/ui/file-upload";
 import { Progress } from "@/components/ui/progress";
 import { Download, RefreshCw, Image as ImageIcon, FileImage, ArrowRight, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
-import { Helmet } from "react-helmet-async";
 
 const GifToMp4 = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -84,10 +83,6 @@ const GifToMp4 = () => {
 
   return (
     <>
-      <Helmet>
-        <title>GIF zu MP4 umwandeln – kostenlos & online (ohne Upload)</title>
-        <meta name="description" content="Wandle GIF-Animationen in MP4-Videos direkt im Browser um. Kostenlos, schnell, ohne Anmeldung. Kleinere Dateien, bessere Qualität." />
-      </Helmet>
       
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">

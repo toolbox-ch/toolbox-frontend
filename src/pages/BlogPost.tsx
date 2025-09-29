@@ -1,5 +1,4 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { getBlogPost, getRandomPosts } from "@/data/blog";
@@ -39,11 +38,6 @@ const BlogPost = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{post.title} - Toolbox24 Blog</title>
-        <meta name="description" content={post.excerpt} />
-        <meta name="keywords" content={`${post.title}, PDF, Bildbearbeitung, Tutorial, Anleitung`} />
-      </Helmet>
 
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">

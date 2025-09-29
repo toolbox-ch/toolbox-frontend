@@ -26,6 +26,15 @@ export default defineConfig(({ mode }) => ({
       output: {
         manualChunks: undefined,
       },
+      external: (id) => {
+        // Externalize browser-only libraries for SSR
+        if (id.includes('heic2any')) return true;
+        return false;
+      },
     },
+  },
+  ssr: {
+    external: ['heic2any', 'canvas'],
+    noExternal: ['pdfjs-dist'],
   },
 }));

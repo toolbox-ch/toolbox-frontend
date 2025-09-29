@@ -7,7 +7,6 @@ import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Download, RefreshCw, Image as ImageIcon, FileImage, ArrowRight, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
-import { Helmet } from "react-helmet-async";
 // @ts-ignore
 import heic2any from 'heic2any';
 
@@ -93,10 +92,6 @@ const HeicToJpg = () => {
 
   return (
     <>
-      <Helmet>
-        <title>HEIC zu JPG umwandeln – kostenlos & online (ohne Upload)</title>
-        <meta name="description" content="Wandle iPhone HEIC-Fotos in JPG direkt im Browser um. Kostenlos, schnell, ohne Anmeldung. Perfekt für iOS-Fotos zur universellen Nutzung." />
-      </Helmet>
       
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">

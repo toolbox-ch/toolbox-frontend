@@ -7,7 +7,6 @@ import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { Download, ImageIcon } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { Helmet } from 'react-helmet-async';
 
 const PngCompress = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -121,10 +120,6 @@ const PngCompress = () => {
 
   return (
     <>
-      <Helmet>
-        <title>PNG komprimieren online – kostenlos & sicher | Toolbox24</title>
-        <meta name="description" content="PNG-Bilder kostenlos online komprimieren. Reduzieren Sie die Dateigröße Ihrer PNG-Dateien schnell und sicher in Ihrem Browser." />
-      </Helmet>
       
       <div className="min-h-screen py-8">
         <div className="container mx-auto px-4 max-w-4xl">

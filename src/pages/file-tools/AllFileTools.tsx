@@ -1,7 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import { 
   ImageIcon, 
   Scissors, 
@@ -155,11 +154,6 @@ const AllFileTools = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Alle Datei-Tools - Kostenlose Bildbearbeitung | Toolbox24</title>
-        <meta name="description" content="Professionelle Datei-Tools: Bild komprimieren, Größe ändern, zuschneiden, Hintergrund entfernen, Format konvertieren. Datenschutz garantiert - lokale Verarbeitung." />
-        <meta name="keywords" content="Bildbearbeitung, Bild komprimieren, Bildkonverter, Hintergrund entfernen, PNG JPG konvertieren" />
-      </Helmet>
       <div className="min-h-screen py-8">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="page-header">

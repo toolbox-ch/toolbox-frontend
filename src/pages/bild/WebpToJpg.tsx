@@ -7,7 +7,6 @@ import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Download, RefreshCw, Image as ImageIcon, FileImage, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
-import { Helmet } from "react-helmet-async";
 
 const WebpToJpg = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -116,10 +115,6 @@ const WebpToJpg = () => {
 
   return (
     <>
-      <Helmet>
-        <title>WEBP zu JPG umwandeln – kostenlos & online (ohne Upload)</title>
-        <meta name="description" content="Wandle WEBP in JPG direkt im Browser um. Kostenlos, schnell, ohne Anmeldung. Für maximale Kompatibilität mit allen Geräten und Browsern." />
-      </Helmet>
       
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">

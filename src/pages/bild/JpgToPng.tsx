@@ -5,7 +5,6 @@ import { FileUpload } from "@/components/ui/file-upload";
 import { Progress } from "@/components/ui/progress";
 import { Download, RefreshCw, Image as ImageIcon, FileImage, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
-import { Helmet } from "react-helmet-async";
 
 const JpgToPng = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -109,10 +108,6 @@ const JpgToPng = () => {
 
   return (
     <>
-      <Helmet>
-        <title>JPG zu PNG umwandeln – kostenlos & online (ohne Upload)</title>
-        <meta name="description" content="Wandle JPG in PNG direkt im Browser um. Kostenlos, schnell, ohne Anmeldung. Verlustfreie Konvertierung für bessere Qualität und Transparenz-Unterstützung." />
-      </Helmet>
       
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">

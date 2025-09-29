@@ -3,7 +3,6 @@ import { FileUpload } from '@/components/ui/file-upload';
 import { Button } from '@/components/ui/button';
 import { Download, ImageIcon } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { Helmet } from 'react-helmet-async';
 
 const SvgCompress = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -99,10 +98,6 @@ const SvgCompress = () => {
 
   return (
     <>
-      <Helmet>
-        <title>SVG komprimieren online – kostenlos & sicher | Toolbox24</title>
-        <meta name="description" content="SVG-Dateien kostenlos online komprimieren. Reduzieren Sie die Dateigröße Ihrer SVG-Grafiken schnell und sicher in Ihrem Browser." />
-      </Helmet>
       
       <div className="min-h-screen py-8">
         <div className="container mx-auto px-4 max-w-4xl">
