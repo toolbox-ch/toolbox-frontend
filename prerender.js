@@ -1,14 +1,20 @@
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync, writeFileSync, existsSync } from "fs";
+import { readFileSync as readFile } from "fs";
 
 async function prerender() {
   console.log("🚀 Starting prerendering...");
 
   try {
-    // Read the built index.html
-    const template = readFileSync("./dist/index.html", "utf-8");
+    // Check if dist/index.html exists, if not create it from the template
+    let template;
+    if (existsSync("./dist/index.html")) {
+      template = readFileSync("./dist/index.html", "utf-8");
+    } else {
+      // Read from the source index.html as fallback
+      template = readFileSync("./index.html", "utf-8");
+    }
     
-    // For now, we'll just replace the placeholder with a basic HTML structure
-    // This ensures the build process works and the app hydrates properly on the client
+    // Create prerendered HTML for the home route
     const homeHtml = `
       <div class="min-h-screen flex flex-col">
         <div class="bg-card border-b sticky top-0 z-50 backdrop-blur-sm bg-card/95">
@@ -42,15 +48,39 @@ async function prerender() {
     // Replace the placeholder with the prerendered HTML
     const html = template.replace("<!--app-html-->", homeHtml);
     
+    // Ensure dist directory exists
+    if (!existsSync("./dist")) {
+      const { mkdirSync } = await import("fs");
+      mkdirSync("./dist", { recursive: true });
+    }
+    
     // Write the updated index.html
     writeFileSync("./dist/index.html", html);
     
     console.log("✅ Prerendering completed successfully!");
     console.log("📄 Home page prerendered and saved to dist/index.html");
+    console.log("📁 File size:", (html.length / 1024).toFixed(2), "KB");
   } catch (error) {
     console.error("❌ Prerendering failed:", error.message);
-    console.log("📝 Note: This is expected for the first run. The build process is working correctly.");
-    console.log("📄 The dist/index.html file has been created with the placeholder for client-side hydration.");
+    console.error("Stack trace:", error.stack);
+    
+    // Create a fallback index.html if prerendering fails
+    const fallbackHtml = `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Toolbox24 - Kostenlose Tools für PDF, Bilder & Vorlagen</title>
+    <meta name="description" content="Kostenlose Online-Tools für PDF-Bearbeitung, Bildkonvertierung und professionelle Vorlagen. Direkt im Browser, ohne Upload - sicher und effizient." />
+  </head>
+  <body>
+    <div id="root"><!--app-html--></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>`;
+    
+    writeFileSync("./dist/index.html", fallbackHtml);
+    console.log("📄 Fallback index.html created");
   }
 }
 
