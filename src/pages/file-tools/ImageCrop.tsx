@@ -97,7 +97,7 @@ const ImageCrop = () => {
   const getResizeHandle = useCallback((x: number, y: number): ResizeHandle => {
     if (!cropArea || cropArea.width === 0 || cropArea.height === 0) return null;
     
-    const handleSize = typeof window !== 'undefined' && window.innerWidth <= 768 ? 30 : 20; // Touch-friendly handle size
+    const handleSize = window.innerWidth <= 768 ? 30 : 20; // Touch-friendly handle size
     const tolerance = handleSize / 2;
     
     // Corner handles
@@ -471,7 +471,7 @@ const ImageCrop = () => {
       ctx.strokeRect(cropArea.x, cropArea.y, cropArea.width, cropArea.height);
       
       // Draw resize handles (larger for mobile touch targets)
-      const handleSize = typeof window !== 'undefined' && window.innerWidth <= 768 ? 30 : 20;
+      const handleSize = window.innerWidth <= 768 ? 30 : 20;
       const halfHandle = handleSize / 2;
       
       ctx.fillStyle = '#3b82f6';
@@ -494,7 +494,7 @@ const ImageCrop = () => {
       drawHandle(cropArea.x + cropArea.width, cropArea.y + cropArea.height);
       
       // Side handles (smaller)
-      const sideHandleSize = typeof window !== 'undefined' && window.innerWidth <= 768 ? 24 : 16;
+      const sideHandleSize = window.innerWidth <= 768 ? 24 : 16;
       const halfSideHandle = sideHandleSize / 2;
       
       const drawSideHandle = (x: number, y: number) => {

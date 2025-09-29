@@ -5,9 +5,6 @@ const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // Only run on client side
-    if (typeof window === 'undefined') return;
-    
     console.log("ScrollToTop triggered for:", pathname);
     // Delay scroll to ensure DOM is ready
     setTimeout(() => {
